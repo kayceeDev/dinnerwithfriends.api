@@ -1,5 +1,5 @@
 import { model, Schema, Document } from 'mongoose';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 
 export const DOCUMENT_NAME = 'User';
 export const COLLECTION_NAME = 'users';
