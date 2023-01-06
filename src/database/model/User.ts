@@ -4,9 +4,14 @@ import { model, Schema, Document } from 'mongoose';
 export const DOCUMENT_NAME = 'User';
 export const COLLECTION_NAME = 'users';
 
+export const enum Gender {
+  MALE = "Male",
+  FEMALE = "Female",
+  NON_BINARY= "Non-Binary"
+}
 
 export default interface User extends Document{
-  name:string;
+  fullName:string;
   email?:string;
   password?:string;
   gender?: string;
@@ -20,7 +25,7 @@ export default interface User extends Document{
 
 const schema = new Schema(
   {
-    name: {
+    FullName: {
       type: String,
       trim: true,
       required: [true, 'A user must have a name'],
@@ -34,14 +39,13 @@ const schema = new Schema(
     },
     password: {
       type: String,
-      minLength: 8,
-      default: null,
+      select:false
     },
     gender: {
       type: String,
       required: false,
-      enum:["male","female","non-binary","none"],
-      default:"none"
+      enum:[Gender.MALE,Gender.FEMALE,Gender.NON_BINARY],
+      default:"Other"
     },
     mobile: {
       type: String,
@@ -57,6 +61,7 @@ const schema = new Schema(
       type: String,
       trim: true,
       default: null,
+      sparse:true
     },
     verifiedEmail: {
       type: Boolean,
@@ -101,5 +106,9 @@ const schema = new Schema(
 // const User = mongoose.model('User', userSchema);
 
 // module.exports = User;
+
+// schema.index({ _id: 1, status: 1 });
+// schema.index({ email: 1 });
+// schema.index({ status: 1 });
 
 export const UserModel = model<User>(DOCUMENT_NAME, schema, COLLECTION_NAME);

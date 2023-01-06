@@ -7,6 +7,8 @@ export const COLLECTION_NAME = 'contacts';
 
 export default interface Contact extends Document{
   email:string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const schema = new Schema({
@@ -17,6 +19,18 @@ const schema = new Schema({
     lowercase: true,
     unique: true,
   },
+  createdAt: {
+    type: Date,
+    required: true,
+    select: false,
+  },
+  updatedAt: {
+    type: Date,
+    required: true,
+    select: false,
+  },
+},{
+  versionKey:false
 });
 
-export const Contact = model<Contact>(DOCUMENT_NAME, schema,COLLECTION_NAME);
+export const ContactModel = model<Contact>(DOCUMENT_NAME, schema,COLLECTION_NAME);
